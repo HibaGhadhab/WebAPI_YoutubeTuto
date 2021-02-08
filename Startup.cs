@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization; 
+using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WebAPI_YoutubeTuto
 {
@@ -60,6 +62,14 @@ namespace WebAPI_YoutubeTuto
             {
                 endpoints.MapControllers();
             });
+
+            // for the photos
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                RequestPath = "/Photos"
+            }); 
         }
     }
 }
